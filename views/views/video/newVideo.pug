@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    title Share New Video
+    link(rel="stylesheet",href="/resources/css/style.css")
+  body
+    if error
+      p(style="color:red") #{error}
+    if success
+      p(style="color:green") #{success}
+    form(action="/video/new",method="POST")
+      div
+        label(for="url") YouTube URL:
+        input(type="url",name="url",id="url",required)
+      div
+        label(for="title") Title:
+        input(type="text",name="title",id="title",required)
+      div
+        button(type="submit") Add Video
+    p
+      a(href="/video/dashboard/all") View All Videos
+      |  |
+      a(href="/video/dashboard/mine") View My Videos
