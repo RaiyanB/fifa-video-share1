@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title Login
+    link(rel="stylesheet",href="/resources/css/style.css")
+  body
+    if error
+      p(style="color:red") #{error}
+    form(action="/auth/login",method="POST")
+      div
+        label(for="email") Email:
+        input(type="email",name="email",id="email",required)
+      div
+        label(for="password") Password:
+        input(type="password",name="password",id="password",required)
+      div
+        button(type="submit") Login
+    p
+      a(href="/auth/register") Need an account? Register
