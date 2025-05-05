@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title Register
+    link(rel="stylesheet",href="/resources/css/style.css")
+  body
+    if error
+      p(style="color:red") #{error}
+    form(action="/auth/register",method="POST")
+      div
+        label(for="email") Email:
+        input(type="email",name="email",id="email",required)
+      div
+        label(for="name") Name:
+        input(type="text",name="name",id="name",required)
+      div
+        label(for="password") Password:
+        input(type="password",name="password",id="password",required)
+      div
+        button(type="submit") Register
+    p
+      a(href="/auth/login") Already have an account? Login
