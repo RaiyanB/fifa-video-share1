@@ -1,4 +1,4 @@
-const { readJSON, writeJSON, videosFile } = require('./storage')
++ const { readJSON, writeJSON, VIDEOS_KEY } = require('./storage')
 const { v4: uuid } = require('uuid')
 
 function toEmbedUrl(url) {
@@ -18,12 +18,12 @@ async function addVideo(req, res) {
     return res.redirect('/video/new_video?error=Missing fields')
   const videos = await readJSON(videosFile)
   videos.push({ id:uuid(),url,title,owner:req.session.user.id })
-  await writeJSON(videosFile, videos)
+  await writeJSON(VIDEOS_KEY, videos)
   res.redirect('/video/new_video?success=Video added!')
 }
 async function showDashboard(req, res) {
   const filter = req.params.videofilter
-  const videos = await readJSON(videosFile)
+  const videos = await readJSON(VIDEOS_KEY)
   const list = filter==='mine'
     ? videos.filter(v=>v.owner===req.session.user.id)
     : videos
