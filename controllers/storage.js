@@ -1,16 +1,21 @@
-const fs   = require('fs-extra')
-const path = require('path')
-const usersFile  = path.join(__dirname, '../data/users.json')
-const videosFile = path.join(__dirname, '../data/videos.json')
 
-async function readJSON(file) {
-  await fs.ensureFile(file)
-  const txt = await fs.readFile(file, 'utf8')
-  return txt ? JSON.parse(txt) : []
+const { Redis } = require('@upstash/redis')
+
+const redis = new Redis({
+  url:   process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+})
+
+const USERS_KEY  = 'users'
+const VIDEOS_KEY = 'videos'
+
+async function readJSON(key) {
+  const data = await redis.get(key)
+  return Array.isArray(data) ? data : []
 }
 
-async function writeJSON(file, data) {
-  await fs.writeFile(file, JSON.stringify(data, null, 2))
+async function writeJSON(key, data) {
+  await redis.set(key, data)
 }
 
-module.exports = { usersFile, videosFile, readJSON, writeJSON }
+module.exports = { USERS_KEY, VIDEOS_KEY, readJSON, writeJSON }
