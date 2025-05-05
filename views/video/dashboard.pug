@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title Video Dashboard
+    link(rel="stylesheet",href="/resources/css/style.css")
+  body
+    if videos.length===0
+      p No videos to display.
+    else
+      each video in videos
+        h2= video.title
+        iframe(width="560",height="315",src=video.embedUrl,frameborder="0",allowfullscreen)
+    p
+      a(href="/video/new_video") Share a New Video
+      |  |
+      if filter==='all'
+        a(href="/video/dashboard/mine") Show My Videos
+      else
+        a(href="/video/dashboard/all") Show All Videos
